@@ -2,42 +2,40 @@
 	> File Name: quickS.c
 	> Author: karma1996
 	> Mail: karma1996@foxmail.com
-	> Created Time: 2018年05月26日 星期六 21时42分40秒
+	> Created Time: 2018年05月27日 星期日 09时41分37秒
  ************************************************************************/
 
 #include<stdio.h>
 
-void swap(int* const x, int* const y)
+void swap(int* x, int* y)
 {
     int tmp = *x;
     *x = *y;
     *y = tmp;
 }
 
-int divided(int* const arr, int l, int r)
+int partition_medianValue(int* const arr, int l, int r)
 {
     int mid = (l + r) / 2;
-    int hub = r - 1;
+    int i = l, j = r;
     if(arr[l] > arr[mid])
     {
         swap(&arr[l], &arr[mid]);
-    }
-    if(arr[l] > arr[r])
-    {
-        swap(&arr[l], &arr[r]);
     }
     if(arr[mid] > arr[r])
     {
         swap(&arr[mid], &arr[r]);
     }
-    swap(&arr[mid], &arr[hub]);
+    if(arr[l] > arr[r])
+    {
+        swap(&arr[l], &arr[r]);
+    }
+    swap(&arr[mid], &arr[--j]);
 
-    int i = l, j = hub;
     while(1)
     {
-        while(arr[++i] < arr[hub]){}
-        while(arr[--j] > arr[hub]){}
-
+        while(arr[++i] < arr[mid]){}
+        while(arr[--j] > arr[mid]){}
         if(i < j)
         {
             swap(&arr[i], &arr[j]);
@@ -47,18 +45,40 @@ int divided(int* const arr, int l, int r)
             break;
         }
     }
-    swap(&arr[i], &arr[hub]);
+    swap(&arr[i], &arr[r - 1]);
 
     return i;
 }
 
-void conquer(int* const arr, int l, int r)
+int partition(int* const arr, int l, int r)
+{
+    int i = l, j = r;
+    int pivot = arr[l];
+    while(1)
+    {
+        while(arr[++i] < pivot){}
+        while(arr[j] > pivot){--j;}
+        if(i < j)
+        {
+            swap(&arr[i], &arr[j]);
+        }
+        else
+        {
+            break;
+        }
+    }
+    swap(&arr[j], &arr[l]);
+
+    return j;
+}
+
+void quick_sort(int* const arr, int l, int r)
 {
     if(l < r)
     {
-        int p = divided(arr, l, r);
-        conquer(arr, l, p - 1);
-        conquer(arr, p + 1, r);
+        int p = partition_medianValue(arr, l, r);
+        quick_sort(arr, l, p - 1);
+        quick_sort(arr, p + 1, r);
     }
 }
 
@@ -74,11 +94,11 @@ void print_arr(int arr[], int len)
 
 int main()
 {
-    int arr[] = {4,5,7,8,1,2,3,6};
+    int arr[] = {4,1,3,5,7,2,6};
 
-    conquer(arr, 0, 7);
+    quick_sort(arr, 0, 6);
 
-    print_arr(arr, 8);
+    print_arr(arr, 7);
 
     return 0;
 }
