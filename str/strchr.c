@@ -26,7 +26,7 @@ char *estrchr(const char *s, int c)
 
 int main(int argc, char *argv[])
 {
-    char s[] = "I love china";
+    char s[] = "I love China";
 
     printf("%s,%c,%s\n", s, 'l', estrchr(s, 'l'));
     
