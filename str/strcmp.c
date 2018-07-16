@@ -17,17 +17,17 @@
 #include<string.h>
 #include<assert.h>
 
-int strcmp(const char *src, const char *dest)
+int strcmp(const char *s1, const char *s2)
 {
-    assert((src != NULL) && (dest != NULL));
+    assert((s1 != NULL) && (s2 != NULL));
 
-    while((*src == *dest) && *dest)
+    while((*s1 == *s2) && *s2)
     {
-        ++src;
-        ++dest;
+        ++s1;
+        ++s2;
     }
 
-    return *(unsigned char*)src - *(unsigned char*)dest;
+    return *(unsigned char*)s1 - *(unsigned char*)s2;
 }
 
 int main(int argc, char *argv[])
