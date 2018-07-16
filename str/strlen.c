@@ -24,7 +24,7 @@ int estrlen(const char *s)
 
 int main()
 {
-    char s[] ="i love china";
+    char s[] ="i love China";
     
     printf("%s,%d\n", s, estrlen(s));
     
